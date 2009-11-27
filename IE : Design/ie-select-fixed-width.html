@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>IE fixed width issue</title>
+    <script type="text/javascript" src="http://www.danhawkins.me.uk/wp-content/adhoc/jquery-1.3.2.min.js"></script>
+    <!--[if IE]>
+     <script type="text/javascript">
+      $(document).ready(function(){
+
+          //function to expand the selection box
+          var expand = function(){
+              //capture the original width the first time round
+              if($(this).data('origWidth') == undefined)
+                  $(this).data('origWidth',$(this).css('width'));
+
+              //expand the select
+              $(this)
+                  .css("position","absolute")
+                  .css("width","auto");
+          }
+
+          //function to contract the selection box
+          var contract = function() {
+            //no hide workaround for IE6 to stop the element contacting when clicked
+            if(!$(this).data('noHide'))
+                $(this)
+                  .css("position","relative")
+                  .css("width",$(this).data('origWidth'));
+          }
+
+          //set the noHide workaround on focus and blur
+          var focus = function(){$(this).data('noHide',true)}
+          var blur  = function(){$(this).data('noHide',false); contract.call(this)}
+
+          if($.browser.version.substr(0,1)<7){
+              //IE6
+              $('#big-ass-select')
+                  .hover(expand,contract)
+                  .focus(focus)
+                  .click(focus)
+                  .blur(blur)
+                  .change(blur);
+
+          }else{
+              //IE7 >
+              $('#big-ass-select')
+                  .mousedown(expand)
+                  .change(contract)
+                  .blur(contract);
+          }
+      });
+
+     </script>
+    <![endif]-->
+
+    <style type="text/css">
+      body{
+        font-family: Helvetica, Verdana;
+        font-size: 18px;
+      }
+      
+      p{
+        width:65%;
+      }
+    
+      #big-ass-select{
+        font-size: 16px;
+        width:100px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>In IE6 and IE7 the normal behaviour of the drop down box below would be to truncate the options within,
+    the javascript will expand the width of the select using width: auto and set it to absolute so as not
+    to effect other elements.</p>
+    <br />
+    <select id="big-ass-select">
+      <option>This is a pretty long option</option>
+      <option>But I guess it's not really that long next to this one</option>
+      <option>This is small</option>
+      <option>I think that's enough</option>
+    </select>
+  </body>
+</html>
